@@ -156,7 +156,7 @@ def emit_markdown(out_path: Path, repos, public_root: Path):
     lines.append("")
     lines.append("Status: measurement of a private clone set, not a claim about")
     lines.append("upstream, not a license opinion. Counts macro feature tokens")
-    lines.append("in 1,755 .sas files across 22 public repositories. The estate")
+    lines.append("in 1,755 .sas files across 22 public repositories. The private")
     lines.append("bench under testbed/local/ was compared privately and is not")
     lines.append("reported here. Corrections land as new commits.")
     lines.append("")
