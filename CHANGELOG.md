@@ -39,7 +39,7 @@ every line can be traced to its commit.
 
 - Adopted the drift-management-framework: `AGENTS.md` contract, `agent-manifest.json`
   and its schema, the vendored drift linter, and both CI workflows (`43eae99`).
-- Re-vendored `scripts/inertia-drift-lint` at 2.1.0, whose floor covers all text
+- Re-vendored `scripts/dmf-lint` at 2.1.0, whose floor covers all text
   artifact formats (`c6d45c7`).
 - `verify_all.py` now runs 21 fixture gates and 4 translator suites, so ALL
   VERIFIED covers the translator and not only the fixture surface (`d4858e0`).

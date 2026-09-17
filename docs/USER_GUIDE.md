@@ -236,12 +236,12 @@ verifier skeletons in its references.
 
 Every artifact that leaves this repository follows the drift-management-framework
 floor: no em dashes, no ellipses. The floor is enforced by the linter
-(`scripts/inertia-drift-lint`), never by hand. The linter also checks
+(`scripts/dmf-lint`), never by hand. The linter also checks
 balanced DMF fences, link-pointer integrity, manifest schema, and
 status-line presence. It runs on every push in CI.
 
 ```sh
-python3 scripts/inertia-drift-lint .
+python3 scripts/dmf-lint .
 ```
 
 ## Known landmines (why the gate exists)

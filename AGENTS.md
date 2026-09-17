@@ -53,7 +53,7 @@ anything written to disk or handed to a person.
 - No em dashes. Use commas, semicolons, colons, or restructure.
 - No ellipses. Finish the thought or cut it.
 - Mechanical rules are enforced by the linter, never by the agent's own
-  reasoning. The agent writes naturally; `inertia-drift-lint` catches
+  reasoning. The agent writes naturally; `dmf-lint` catches
   violations after the fact. Spending inference on style compliance is a
   framework violation.
 
@@ -312,7 +312,7 @@ right.
 ## LOCAL
 
 - **Allowed tools**: Python 3.11+ (numpy, pandas, scipy) and R (Rscript)
-  for the fixture gates; the bundled linter (`scripts/inertia-drift-lint`);
+  for the fixture gates; the bundled linter (`scripts/dmf-lint`);
   git; file operations inside the repository. The golden path is one
   command: `python verify_all.py`.
 - **Prohibited**: weakening, skipping, or reordering a fixture gate to make
