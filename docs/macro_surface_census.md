@@ -3,7 +3,7 @@
 Status: measurement of a private clone set, not a claim about
 upstream, not a license opinion. Counts macro feature tokens
 in 1,755 .sas files across 22 public repositories. The private
-bench under testbed/local/ was compared privately and is not
+bench was compared and is not
 reported here. Corrections land as new commits.
 
 ## Method

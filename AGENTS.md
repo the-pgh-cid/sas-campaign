@@ -312,7 +312,8 @@ right.
 ## LOCAL
 
 - **Allowed tools**: Python 3.11+ (numpy, pandas, scipy) and R (Rscript)
-  for the fixture gates; the bundled linter (`scripts/dmf-lint`);
+  for the fixture gates; C++17 compilation for the scalar backend pilot;
+  the bundled linter (`scripts/dmf-lint`);
   git; file operations inside the repository. The golden path is one
   command: `python verify_all.py`.
 - **Prohibited**: weakening, skipping, or reordering a fixture gate to make
@@ -333,7 +334,8 @@ right.
   lands as one commit with its receipt.
 - **Project-specific constraints**: no runtime dependencies beyond the gate
   set (Python standard library plus numpy, pandas, scipy, PyYAML for the
-  rulebook loader, duckdb for the SQL target gates, and base R); every
+  rulebook loader, duckdb for the SQL target gates, rich for the interface
+  presentation, and base R); every
   claim in the README or docs is backed by a passing gate or a receipt; the
   sibling sas-ref stays a data repository.
 

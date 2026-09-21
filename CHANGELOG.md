@@ -1,7 +1,35 @@
+# Changes for 0.3.0
+
+Status: development changes with original pins and Python/base-R evidence; no
+live SAS comparison. Branch synchronization is separate from a release.
+
+- Require typed expected comparisons, ordered rows/columns, and preserved metadata;
+  make synthesis numeric tolerance explicit per family.
+- Add version 2 DATA events: OUTPUT snapshots, WHERE/IF timing, BY flags, numeric
+  retention, and a bounded first-iteration lookup SET.
+- Preserve character widths, encodings, labels, format descriptors, and special
+  missing identity. Reject unsupported conversions and ambiguous state cases.
+- Keep version 1 plans readable and make C++ reject new unsupported operations.
+- Add original event and metadata witnesses, base-R twins, and an operator example;
+  append the gates after all original fixture gates.
+
+# Changes for 0.2.0
+
+Status: development changes with repository verification; no live SAS claim.
+
+- Repair lexical fences and contextual routing; retain unsupported text as tickets.
+- Add versioned operation plans, numeric Python dataset execution, and a C++17
+  scalar backend with cross-backend tests.
+- Add the operator CLI, installable packaging, dependency snapshot, and a composed
+  rounding/sort/merge example with pinned and base-R output.
+- Record source hashes, full diagnostics, and runtime versions in checksummed
+  receipts; fail synthesis on incomplete execution and preserve binary64 CSV values.
+- Keep the original fixture gates and extend unified verification and CI.
+
 # Changelog
 
 All notable changes to sas-campaign are recorded here. Versioning is semver per
-`agent-manifest.json`, and the current version is `0.1.0`.
+`agent-manifest.json`, and the current version is `0.3.0`.
 
 The repository carries no release tags yet, so a version named in this file
 describes a state of `main` rather than a published artifact. This file was added

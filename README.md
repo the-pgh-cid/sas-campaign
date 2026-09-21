@@ -2,7 +2,7 @@
 
 Reproducing SAS behavior in open languages (Python, R) with receipts.
 
-The AE85 to sas-ref's AE86: the quiet workhorse underneath the legend.
+The quiet workhorse underneath the legend: the toolchain behind the sas-ref corpus.
 This repository holds the migration toolchain: reference implementations of
 SAS semantics, gold-pair fixtures that prove cross-language agreement, and
 the rulebook for translating SAS constructs. The corpus it is tested against
@@ -12,6 +12,22 @@ The core claim: a translated program is accepted because it ran and its
 numbers matched, not because it looked right. Every fixture gate in this
 repository demands byte-equal output between the Python and R translations,
 checked against hand-pinned truth and the semantics reference.
+
+## Operational workflow
+
+The typed execution workflow and C++ scalar pilot use a shared, versioned
+operation plan. See [Operations](docs/OPERATIONS.md) for installation, the CLI,
+explicit scope, receipts, and peer synchronization. The composed example in
+`examples/workflow/` runs rounding, sorting, and a one-to-many merge against a
+pinned result and a base-R counterpart. Python executes bounded typed datasets;
+C++ currently supports scalar DATA _NULL_ programs. Julia remains an extension
+option. Algorithm redesign must preserve a stated behavior contract.
+
+
+The [stateful execution contract](docs/STATEFUL_EXECUTION.md) adds typed expected
+comparisons, explicit OUTPUT snapshots, WHERE/IF timing, retained variables, and
+character/metadata preservation. `examples/events/` provides a runnable job with
+fixed expected output and base-R evidence. Special missings retain their tags.
 
 ## Layout
 
@@ -29,10 +45,9 @@ checked against hand-pinned truth and the semantics reference.
   receipts, understanding the equivalence classes, and verifying a new
   construct family.
 - `sas_campaign/` : the program-level translator package (Track A). `parser.py`
-  splits statements fence-robustly, `rules.py` loads the rulebook and
-  routes constructs, and `emit_py.py` emits Python for the data-step
-  subset (slice one: the rounding fixture, emitted code calling the
-  semantics reference). Tests: `sas_campaign/test_parser.py`,
+  preserves statement fences, `rules.py` loads the rulebook and
+  routes constructs, and the shared plan drives Python typed dataset execution
+  and a C++ scalar backend. Tests: `sas_campaign/test_parser.py`,
   `sas_campaign/test_rules.py`, `sas_campaign/test_emit_py.py`.
 - `kb01/sas_semantics_reference.txt` : the semantics reference as plain
   text, for humans and for diffs.
@@ -40,7 +55,7 @@ checked against hand-pinned truth and the semantics reference.
 - `synth.py` : program-level synthesis across characterized construct
   families, seeded and deterministic. Runs cross-language and reference
   gates; the live-SAS capture stage is optional and license-gated.
-- `verify_all.py` : runs every fixture gate, emits a signed receipt JSON.
+- `verify_all.py` : runs every fixture gate, emits a checksummed receipt JSON.
   One command, the whole proof.
 - `tools/macro_census.py` : token census of the macro surface across the
   licensed public testbed, deterministic, pure stdlib. Outputs the
@@ -68,6 +83,15 @@ The R interpreter is found via `ROSETTA_RSCRIPT`, then `Rscript` on PATH.
 `verify_all.py` writes its receipts under `telemetry/` (gitignored).
 
 ## Known landmines (why the gate exists)
+
+- Ordinary equality can accept true as 1, and string conversion can accept text
+  "1.0" as numeric 1.0. Typed comparisons reject both; row/schema order and metadata
+  matter too (`sas_campaign/test_compare.py`).
+- Explicit OUTPUT disables automatic output even when its branch is skipped.
+  WHERE runs before BY groups form; subsetting IF runs afterward. Input/retained
+  variables survive iterations while scratch variables reset (`verify_events.py`).
+- Character byte widths affect assignments. Losing leading zeros, missing tags,
+  labels, or format descriptors changes the typed result (`verify_metadata.py`).
 
 - SAS `round(x, unit)` rounds half away from zero; Python and R round half
   to even by default. A naive translation disagrees with SAS at every

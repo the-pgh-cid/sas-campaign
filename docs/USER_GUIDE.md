@@ -55,19 +55,26 @@ evidence; the gate suite is the proof; nothing is verified by assertion.
   `emit_py.py` emits Python for the data-step subset (slice one: the
   rounding fixture). Tests in `sas_campaign/test_parser.py`,
   `sas_campaign/test_rules.py`, and `sas_campaign/test_emit_py.py`.
-- `verify_all.py` : runs every fixture gate, emits a signed receipt JSON.
+- `verify_all.py` : runs every fixture gate, emits a checksummed receipt JSON.
   One command, the whole proof.
 - `telemetry/` : run artifacts (receipts, run records). Gitignored;
   rerun `verify_all.py` to regenerate.
 
+## Operational additions
+
+[Operations](OPERATIONS.md) is the current installation and execution guide for
+version 0.2. It specifies the shared plan, Python numeric dataset workflow, C++
+scalar pilot, and schema-version-2 verification receipts. The historical fixture
+reference below describes the original interfaces.
+
 ## Requirements
 
-- Python 3.11+ with numpy, pandas, scipy, and PyYAML. A venv with the
+- Python 3.11+ with numpy, pandas, scipy, PyYAML, and duckdb. A venv with the
   gate stack (for example `.venv` beside this checkout) carries it.
 - R (for the R halves of the gold pairs). `Rscript` must be on PATH, or
   set `ROSETTA_RSCRIPT` to the full path. The R interpreter is found via
   `ROSETTA_RSCRIPT`, then `Rscript` on PATH.
-- No other runtime dependencies. The linter and the census tool are pure
+- The C++ pilot gate also requires a C++17 compiler. No other runtime dependencies. The linter and the census tool are pure
   standard library.
 
 ## Running the gates
@@ -158,7 +165,7 @@ python -m unittest sas_campaign.test_parser -v
 python -m unittest sas_campaign.test_emit_py -v
 ```
 
-`test_parser` proves fence robustness, including across the 56-task Roku
+`test_parser` proves fence robustness, including across the 56-task sas-ref
 corpus; `test_emit_py` translates the rounding fixture, runs the emitted
 program, and requires its output to match the semantics reference and a
 frozen pin.
@@ -172,7 +179,7 @@ python3 tools/macro_census.py
 Regenerates `docs/macro_surface_census.csv` and
 `docs/macro_surface_census.md` from the licensed public testbed
 (point `--testbed` at your checkout of it). Deterministic: identical output on
-identical input. The private bench under `testbed/local/` is never written
+identical input. The private bench under `local/` is never written
 to the shipped output; `--include-local` prints a private comparison to
 stdout only.
 

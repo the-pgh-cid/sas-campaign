@@ -5,7 +5,7 @@ first. Comments, string literals, and macro quotes must never break the
 splitter's boundaries. A statement containing a comment or a string with
 semicolons or /* markers must survive intact.
 
-Runs against the 56-task Roku corpus where noted. Pure stdlib unittest.
+Runs against the 56-task sas-ref corpus where noted. Pure stdlib unittest.
 
 Run: python -m unittest sas_campaign.test_parser -v
 """
@@ -22,10 +22,10 @@ from sas_campaign.parser import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-# Sibling checkout of the sas-ref corpus; override with SAS_REF_CORPUS.
+# Sibling checkout of the sas-ref corpus; override with SAS_CAMPAIGN_ROKU_CORPUS.
 ROKU_CORPUS = Path(os.environ.get(
-    "SAS_REF_CORPUS",
-    REPO_ROOT.parent / "sas_campaign-roku" / "corpus"))
+    "SAS_CAMPAIGN_ROKU_CORPUS",
+    REPO_ROOT.parent / "sas-ref" / "corpus"))
 
 
 class TokenizerTests(unittest.TestCase):
@@ -119,7 +119,7 @@ class SplitterTests(unittest.TestCase):
 
     def test_macro_quote_does_not_split(self):
         # %STR(%'...'%) style quoting keeps a semicolon inside intact.
-        # NOTE: zero occurrences in the Roku corpus; this fence is
+        # NOTE: zero occurrences in the sas-ref corpus; this fence is
         # documented and unit-tested, not corpus-weighted.
         src = "%let x = %str(a;b);"
         stmts = split_statements(src)
@@ -130,7 +130,7 @@ class SplitterTests(unittest.TestCase):
 
 
 class CorpusTests(unittest.TestCase):
-    """Run the splitter across the 56-task Roku corpus.
+    """Run the splitter across the 56-task sas-ref corpus.
 
     Every file must split into at least one statement, no statement may be
     empty, and every statement must re-join (by reconstruction of the
@@ -142,7 +142,7 @@ class CorpusTests(unittest.TestCase):
     def setUpClass(cls):
         cls.corpus = sorted(ROKU_CORPUS.glob("*.sas"))
         if not cls.corpus:
-            raise unittest.SkipTest("Roku corpus not present")
+            raise unittest.SkipTest("sas-ref corpus not present")
 
     def test_corpus_present(self):
         self.assertEqual(len(self.corpus), 56)
@@ -152,7 +152,10 @@ class CorpusTests(unittest.TestCase):
             with self.subTest(file=path.name):
                 src = path.read_text(encoding="utf-8", errors="replace")
                 stmts = split_statements(src)
-                self.assertGreater(len(stmts), 0, f"{path.name}: no statements")
+                if path.name == "comments.sas":
+                    self.assertEqual(stmts, [], "the comment-only task has no executable statements")
+                else:
+                    self.assertGreater(len(stmts), 0, f"{path.name}: no statements")
                 for s in stmts:
                     self.assertTrue(s.text.strip(), f"{path.name}: empty statement")
 
@@ -183,6 +186,9 @@ class CorpusTests(unittest.TestCase):
                 if not src.lstrip().startswith("/*"):
                     continue
                 stmts = split_statements(src)
+                if not stmts:
+                    self.assertEqual(path.name, "comments.sas")
+                    continue
                 self.assertNotIn("Source:", stmts[0].text,
                                  f"{path.name}: provenance header leaked into statement")
 

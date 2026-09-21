@@ -16,7 +16,7 @@ Outputs (ship):
   docs/macro_surface_census.csv   machine-readable frequency table
   docs/macro_surface_census.md    report: scope, aggregates, NOTICE
 
-The private bench under testbed/local/ is never written to the shipped
+The private bench under local/ is never written to the shipped
 output; --include-local prints a private comparison to stdout only.
 """
 
@@ -157,7 +157,7 @@ def emit_markdown(out_path: Path, repos, public_root: Path):
     lines.append("Status: measurement of a private clone set, not a claim about")
     lines.append("upstream, not a license opinion. Counts macro feature tokens")
     lines.append("in 1,755 .sas files across 22 public repositories. The private")
-    lines.append("bench under testbed/local/ was compared privately and is not")
+    lines.append("bench was compared and is not")
     lines.append("reported here. Corrections land as new commits.")
     lines.append("")
     lines.append("## Method")
@@ -295,7 +295,7 @@ def main(argv=None):
             local = scan_tree(local_root)
             lf = sum(a["files"] for a in local.values())
             ll = sum(a["lines"] for a in local.values())
-            print(f"\nPRIVATE bench comparison (stdout only, not shipped):")
+            print(f"\nPRIVATE private comparison (stdout only, not shipped):")
             print(f"private files: {lf}, code lines: {ll}")
             for rule_id, name, _rx in sorted(FEATURES,
                                              key=lambda f: -sum(

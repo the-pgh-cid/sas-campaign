@@ -1,4 +1,4 @@
-/* rounding_program.sas: an original synthetic fixture (no externally sourced material).
+/* rounding_program.sas: an original synthetic fixture (no third-party material).
    Exercises the SAS ROUND half-away-from-zero law across half-unit
    boundaries. The translator's first end-to-end target (Track A step 3). */
 data rounded_values;
