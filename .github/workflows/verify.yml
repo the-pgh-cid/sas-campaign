@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
-          repository: Matthew Haubach/sas-ref
+          repository: the-pgh-cid/sas-ref
           ref: 00b8b8879292309ef67d8351a05d333a0d66b9ae
           path: .verification-corpus
       - uses: actions/setup-python@v5
@@ -28,7 +28,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends r-base-core g++
       - name: Check the environment and run every gate
         env:
-          SAS_CAMPAIGN_ROKU_CORPUS: ${{ github.workspace }}/.verification-corpus/corpus
+          SAS_CAMPAIGN_REF_CORPUS: ${{ github.workspace }}/.verification-corpus/corpus
         run: |
           sas_campaign doctor
           python verify_all.py

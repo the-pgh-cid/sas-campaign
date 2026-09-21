@@ -120,8 +120,8 @@ def main() -> int:
         results.append(run_check(name, [sys.executable, "-m", "unittest", module], "suite", env))
     synth_env = {**env, "K": "10", "ROSETTA_TESTBED": str(TEL.resolve() / "synthesis")}
     results.append(run_check("synthesis", [sys.executable, str(HERE / "synth.py")], "synthesis", synth_env))
-    from sas_campaign.test_parser import ROKU_CORPUS
-    corpus = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(ROKU_CORPUS.glob("*.sas"))}
+    from sas_campaign.test_parser import REF_CORPUS
+    corpus = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(REF_CORPUS.glob("*.sas"))}
     end_source = source_state(HERE)
     # Generated receipts live in ignored paths and cannot change the source hash.
     stable = source["source_sha256"] == end_source["source_sha256"]

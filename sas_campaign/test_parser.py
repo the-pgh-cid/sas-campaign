@@ -22,9 +22,9 @@ from sas_campaign.parser import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-# Sibling checkout of the sas-ref corpus; override with SAS_CAMPAIGN_ROKU_CORPUS.
-ROKU_CORPUS = Path(os.environ.get(
-    "SAS_CAMPAIGN_ROKU_CORPUS",
+# Sibling checkout of the sas-ref corpus; override with SAS_CAMPAIGN_REF_CORPUS.
+REF_CORPUS = Path(os.environ.get(
+    "SAS_CAMPAIGN_REF_CORPUS",
     REPO_ROOT.parent / "sas-ref" / "corpus"))
 
 
@@ -140,7 +140,7 @@ class CorpusTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.corpus = sorted(ROKU_CORPUS.glob("*.sas"))
+        cls.corpus = sorted(REF_CORPUS.glob("*.sas"))
         if not cls.corpus:
             raise unittest.SkipTest("sas-ref corpus not present")
 

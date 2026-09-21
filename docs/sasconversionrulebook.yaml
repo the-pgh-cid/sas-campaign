@@ -784,14 +784,14 @@ runtime_capabilities:
     validation_test: sas_campaign.test_compare
     synthesis: numeric CSV; rounding absolute tolerance 1e-10, other families exact
   data_events:
-    garage_research_ids: [SL003, SL004, SL005]
+    sas_kb_research_ids: [SL003, SL004, SL005]
     target: sas_campaign.runtime.run_plan
     scope: one DATA destination, explicit OUTPUT, simple WHERE/IF, numeric RETAIN, initial lookup SET
     validation_test: examples/verify_events.py
     r_witness: examples/events.R
     boundary_tests: sas_campaign.test_events
   typed_metadata:
-    garage_research_ids: [SL006, SL020]
+    sas_kb_research_ids: [SL006, SL020]
     target: sas_campaign.values
     scope: explicit typed catalog, fixed character byte widths, labels, format descriptors, encoding, tagged missings
     validation_test: examples/verify_metadata.py

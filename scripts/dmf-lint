@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """dmf-lint: the DMF invariant linter.
 
-Catches the drift that inertia lets slide: unbalanced fences, broken
+Catches the drift that creeps in unnoticed: unbalanced fences, broken
 pointers, malformed manifests, missing status lines, and the style floor
 (no em dashes, no ellipses) in artifacts.
 
