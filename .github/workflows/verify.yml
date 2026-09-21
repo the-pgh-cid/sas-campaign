@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: the-pgh-cid/sas-ref
-          ref: 00b8b8879292309ef67d8351a05d333a0d66b9ae
+          ref: 2b6a13cb4faef7941e9a3909f32f0d65c4454fdc
           path: .verification-corpus
       - uses: actions/setup-python@v5
         with:
