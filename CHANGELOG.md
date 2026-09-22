@@ -17,6 +17,12 @@ live SAS comparison. Branch synchronization is separate from a release.
   execution, and the missing-argument push. Extends DS-007 from a pattern test to
   a byte-equal Python/R gate.
 
+- Ship the rulebook as JSON: `docs/sasconversionrulebook.json` replaces the YAML
+  source and the loader becomes standard library only. The file banner and the
+  runtime-capabilities note move into the document as data; the six section
+  banners retire because the loader derives rule families from rule_id prefixes.
+  The tool now declares no required third-party dependency.
+
 # Changes for 0.2.0
 
 Status: development changes with repository verification; no live SAS claim.
