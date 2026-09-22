@@ -87,6 +87,13 @@ The R interpreter is found via `ROSETTA_RSCRIPT`, then `Rscript` on PATH.
 - Ordinary equality can accept true as 1, and string conversion can accept text
   "1.0" as numeric 1.0. Typed comparisons reject both; row/schema order and metadata
   matter too (`sas_campaign/test_compare.py`).
+- LAG and DIF are queues, never column shifts. Each occurrence carries its own
+  queue of depth n, and the queue advances where the CALL RUNS rather than
+  where the row exists, so a conditional call returns the value at the previous
+  EXECUTION. On values 10, 20, 30, 40 invoked only on rows two and four, SAS
+  returns missing then 20 where the shift model returns 10 and 30. A missing
+  argument is still an execution, which makes a skipped call and a call with a
+  missing argument different histories (`verify_lag.py`).
 - Explicit OUTPUT disables automatic output even when its branch is skipped.
   WHERE runs before BY groups form; subsetting IF runs afterward. Input/retained
   variables survive iterations while scratch variables reset (`verify_events.py`).
