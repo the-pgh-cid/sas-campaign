@@ -77,6 +77,7 @@ SUITES = [
     ("suite-comparison", "sas_campaign.test_compare"),
     ("suite-events", "sas_campaign.test_events"),
     ("suite-metadata", "sas_campaign.test_metadata"),
+    ("suite-functions", "sas_campaign.test_functions"),
 ]
 
 
