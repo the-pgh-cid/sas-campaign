@@ -339,4 +339,25 @@ right.
   claim in the README or docs is backed by a passing gate or a receipt; the
   sibling sas-ref stays a data repository.
 
+### Source lane
+
+This repository is the professional lane of a tool that also ships in a
+persona lane, `buntas-tofu/SASChi-Go`. The two lanes are not forks, and they
+never merge.
+
+- **Naming**: this lane uses package `sas_campaign` under the Matthew Haubach
+  principal. The source lane uses package `saschi` under the `buntas-tofu`
+  principal.
+- **Direction**: changes originate in the source lane. This lane is cut from a
+  named commit there, with the package, launcher, and linter names rewritten
+  and persona strings removed. It is never the origin of a feature change.
+- **What this lane mirrors**: commit `43eaa56` of the source lane
+  (2026-09-24, version 0.3.0), matched by commit subject (inference, not a
+  recorded cut receipt). The source lane has moved to 0.4.0, so this lane is
+  behind by that gap. Behind is a stated position, not an implied parity.
+- **Auth**: when both accounts are configured on one machine, address each
+  lane with that account's own token (`gh auth token --user the-pgh-cid`). A
+  bare `gh` command uses the active account and fails on write against the
+  other lane.
+
 <!-- DMF:LOCAL:END -->
